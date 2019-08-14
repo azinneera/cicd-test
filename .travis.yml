@@ -5,12 +5,18 @@ cache:
   directories:
     - .autoconf
 before_install:
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
   - wget https://product-dist.ballerina.io/downloads/0.991.0/ballerina-linux-installer-x64-0.991.0.deb
   - sudo dpkg -i ballerina*.deb
   - wget https://wso2.org/jenkins/view/cellery/job/cellery/job/sdk/lastSuccessfulBuild/artifact/installers/ubuntu-x64/target/*zip*/target.zip
   - unzip target.zip
-  - export KUBERNETES_MASTER=192.168.1.1
   - sudo dpkg -i target/cellery*.deb
+  - export KUBERNETES_MASTER=https://35.197.64.207
 script:
+  - pwd
+  - cd ${TRAVIS_BUILD_DIR}
+  - pwd
   - cellery build foo.bal myorg/foo:${TRAVIS_COMMIT}
-  - cellery update foo myorg/foo:${TRAVIS_COMMIT}
+  - cellery run myorg/foo:${TRAVIS_COMMIT} -n foo
