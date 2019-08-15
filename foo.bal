@@ -22,7 +22,7 @@ public function build(cellery:ImageName iName) returns error? {
     cellery:Component helloComponent = {
         name: "hello",
         source: {
-            image: "azinneera/hello:1.0.0"
+            image: "wso2cellery/samples-hello-world-webapp"
         },
         ingresses: {
             webUI: <cellery:WebIngress>{ // Web ingress will be always exposed globally.
@@ -34,7 +34,7 @@ public function build(cellery:ImageName iName) returns error? {
             }
         },
         envVars: {
-            HELLO_NAME: { value: "Cellery" }
+            HELLO_NAME: { value: "World" }
         }
     };
 
